@@ -20,13 +20,13 @@ export const createImageRouter = (S3service: S3service, imageModel: ImageModelTy
     })
 
     //middleware before the data is written
-    // router.post("/:id", async (req, res,next) => {
-    //     const userId = getUserName(req);
-    //     const shouldLimit = await shouldLimitRate(redisClient,userId,rateLimit.interval,rateLimit.limit);
-    //     if(shouldLimit)
-    //         return res.status(429).send("Too Many Requests")
-    //     next();
-    // })
+    router.post("/:id", async (req, res,next) => {
+        const userId = getUserName(req);
+        const shouldLimit = await shouldLimitRate(redisClient,userId,rateLimit.interval,rateLimit.limit);
+        if(shouldLimit)
+            return res.status(429).send("Too Many Requests")
+        next();
+    })
 
     router.post("/:id", async (req, res) => {
         const { id } = req.params;

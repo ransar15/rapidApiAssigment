@@ -13,6 +13,7 @@ exports.createImageRouter = void 0;
 const express_1 = require("express");
 const mongodb_1 = require("mongodb");
 const dal_1 = require("../../DB/models/Image/dal");
+const redis_utils_1 = require("../../redisService/redis.utils");
 const getUserName = (req) => req.headers["x-username"];
 const createImageRouter = (S3service, imageModel, redisClient, rateLimit) => {
     const router = new express_1.Router();
@@ -23,13 +24,13 @@ const createImageRouter = (S3service, imageModel, redisClient, rateLimit) => {
         res.send(data);
     }));
     //middleware before the data is written
-    // router.post("/:id", async (req, res,next) => {
-    //     const userId = getUserName(req);
-    //     const shouldLimit = await shouldLimitRate(redisClient,userId,rateLimit.interval,rateLimit.limit);
-    //     if(shouldLimit)
-    //         return res.status(429).send("Too Many Requests")
-    //     next();
-    // })
+    router.post("/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+        const userId = getUserName(req);
+        const shouldLimit = yield (0, redis_utils_1.shouldLimitRate)(redisClient, userId, rateLimit.interval, rateLimit.limit);
+        if (shouldLimit)
+            return res.status(429).send("Too Many Requests");
+        next();
+    }));
     router.post("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { id } = req.params;
         const { body } = req;
