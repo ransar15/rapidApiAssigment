@@ -1,0 +1,31 @@
+{
+  "name": "express-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "compilerOptions": {
+    "module": "CommonJS"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:warch": "tsc --watch",
+    "start": "node ./dist/index.js",
+    "start:dev": "npm run build && npm start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "mongodb": "^4.8.0",
+    "mongoose": "^6.4.7",
+    "ramda": "^0.28.0",
+    "redis": "^4.2.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
